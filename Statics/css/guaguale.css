@@ -1,0 +1,255 @@
+﻿/*
+
+css
+
+作者百度ID:你是shou啊
+
+*/
+
+
+h1
+{
+    color:#5B00AE;
+    text-align:center;
+    font-size:45px;
+    width:600px;
+    margin:50px auto;
+    padding:10px 0px;
+}
+
+#head
+{
+    position:fixed;
+    top:5px;
+    left:5px;
+}
+
+#huodongshuoming
+{
+    position:fixed;
+    bottom:5px;
+    right:5px;
+}
+
+#goumai
+{
+    margin:0 auto;
+    width:241px;/*极限值*/
+}
+
+#goumai span
+{
+    /*margin-left:50px;*/
+}
+
+#guayigua
+{
+    margin:0 auto;
+    width:1333px;/*宽度极限值*/
+}
+
+#tongji
+{
+    margin:0 auto;
+    width:900px;
+}
+
+#tongji1
+{
+    margin:0 auto;
+    text-align:center;
+    margin:10px auto;
+}
+
+#ok
+{
+    width:500px;
+    height:119px;
+    margin:80px auto;
+}
+
+#guayigua span
+{
+    margin-left:25px;
+}
+
+#youxicangku_head
+{
+    background-color:#00FFFF;
+    width:500px;
+    height:19px;
+}
+
+#youxicangku_head1
+{
+    margin-left:0px;
+    float:left;
+}
+
+#youxicangku_head2
+{
+
+}
+
+#youxicangku_head3
+{
+    margin-right:0px;
+    float:right;
+}
+
+#qb10
+{
+    float:left;
+    margin-right:15px;
+}
+
+/*类选择器*/
+.gua1
+{
+    float:left;
+}
+
+#gua_6
+{
+    margin:0 auto;
+    text-align:center;
+}
+
+#gua_6_1
+{
+    margin:0 auto;
+    text-align:center;
+}
+
+#shuoming_jifen
+{
+    margin:0 auto;
+    width:1350px;
+    height:290px;
+}
+
+#shuoming
+{
+    float:left;
+    width:147px;
+    height:290px;
+}
+
+#jifen
+{
+    margin:0 auto;
+    float:left;
+    width:481px;
+    height:290px;
+}
+
+#zhongjianggonggao_1
+{
+    float:left;
+    margin:0 auto;
+    height:290px;
+}
+
+#youxicangkubiaoti
+{
+    /*position:fixed;
+    right:0px;*/
+
+    text-align:center;
+}
+
+#youxicangku_head
+{
+    margin:0 auto;
+    width:500px;
+}
+
+#xiamian
+{
+    height:620px;
+}
+
+#myqb_mycfdian
+{
+    position:fixed;
+    top:5px;
+    right:5px;
+}
+
+#chakanjilu
+{
+    position:fixed;
+    bottom:5px;
+    left:5px;
+}
+
+
+
+
+/********************* 刮卡结果中奖公告CSS  *********************/
+
+
+/*body
+{
+    text-align:center;
+}*/
+
+#ul
+{
+    margin:0px;
+    padding:0px;
+    list-style:none;
+    text-align:center;
+}
+
+#andyscroll
+{
+    overflow: hidden;
+    background: #E8F8F8;
+    padding: 0 10px;
+    text-align: left;
+    width:500px;
+    height:150px;
+    overflow:hidden;
+    margin:0 auto;
+}
+
+#andyscroll a
+{
+    font:12px/18px tahoma;
+    color: #000;
+    float:left;
+    width:100%;
+    text-decoration: none;
+    display:block;
+}
+
+#andyscroll a:hover
+{
+    font:12px/18px tahoma;
+    color: #F60;
+}
+
+#zhongjianggonggao
+{
+    color:#5B00AE;
+    text-align:center;
+    font-size:25px;
+    width:600px;
+    /*margin:0px auto;*/
+    padding:5px 0px;
+}
+
+#kehuodejifen
+{
+    color:#5B00AE;
+    text-align:center;
+    font-size:25px;
+    width:531px;
+    /*margin:0px auto;*/
+    padding:5px 0px;
+}
+
+
+
+

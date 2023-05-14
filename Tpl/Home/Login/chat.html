@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>聊天室</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+
+        <script type="text/javascript" src="/Statics/js/milo.min.js"></script><!--腾讯js-->
+
+        <link href="/Statics/css/chat.min.css" rel="stylesheet" type="text/css" /><!-- css -->
+
+        <script type="text/javascript" src="/Statics/js/chat.min.js"></script><!-- JS -->
+
+    </head>
+
+
+    <body style="background-image:url(/Statics/image/beijing.jpg);background-size:cover;">
+        <div id="main">
+            <!--<div id="left">
+                <h2>在线名单：（5人）</h2>
+                <ul id="user">
+                    <li>帅哥：恶魔</li>
+                    <li>靓妹：甜甜</li>
+                    <li>帅哥：诸葛</li>
+                    <li>帅哥：成就梦想</li>
+                    <li>靓妹：郁金香</li>
+                </ul>
+                <ul id="anniu">
+                    <li><input type="button" value="刷新名单" ></li>
+                    <li><input type="button" value="刷新屏幕" ></li>
+                    <li><input type="button" value="退出聊天" ></li>
+                </ul>
+            </div>-->
+            <div id="right">
+                <div id="content">
+                    <!-- <h2 id="content-title">有什么意见和建议欢迎大家踊跃提出</h2>
+                    <hr /> -->
+                    <div id="show_msg"></div>
+                </div>
+                <div id="send">
+                    <form>
+                        <div id="control">
+                            <textarea id="msg" name="msg" maxlength="1000" placeholder="输入聊天消息......"></textarea>
+                            <input type="button" value="发送" title="发送聊天消息" onclick="sendmsg()" />
+                            <input type="reset"  value="重置" title="重置" style="background-color:orange" />
+                            <b><font color="red"><span id="sendresult"></span></font></b>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--游戏仓库弹出层-->
+        <div id="youxicangku_box" style="display:none;width:505px;height:505px;overflow:auto;background-image:url('/Statics/image/');">
+            <a href="javascript:showDialog.hide()" title="关闭">×</a>
+            <div style="position:fixed;top:50px;">
+                <!--<a href="javascript:showDialog.hide()" title="关闭">×</a>-->
+                <!--<b>
+                    武器[<?php echo $count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    V[<?php echo $v_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    K[<?php echo $k_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    角色[<?php echo $juese_count; ?>]
+                </b>-->
+            </div>
+            <div id="youxicangku"></div>
+        </div>
+
+        <div id="head">
+            <image src="<?php echo $head; ?>" title="我的头像" /><br />
+            <b><font color='blue' size='4'><?php echo $_SESSION['ok']['username']; ?></font></b>
+        </div>
+
+        <div id="liaotianshishuoming">
+            <input type="button" value="聊天室说明" style="background:yellow" onclick="alert('<?php echo $liaotianshishuoming; ?>')" title="聊天室说明" />&nbsp;
+            <a href="<?php echo U('index'); ?>" title="返回首页"><b><font size="2" color="#663399">返回首页</font></b></a>
+        </div>
+
+        <!--<embed id="mp3" src="/5404.mp3" width="0" height="0" loop="false" autostart="false"></embed>
+
+        <input type="button" value="播放" onclick="playSound()" />
+
+        <script type="text/javascript">
+            function playSound()
+            {
+                var node=document.getElementById(mp3);
+                if(node!=null)
+                {
+                    node.Play();
+                }
+            }
+        </script>-->
+    </body>
+
+
+</html>

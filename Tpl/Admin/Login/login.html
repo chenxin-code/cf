@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>后台登录</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="statics/styles/general.css" rel="stylesheet" type="text/css" />
+<link href="statics/styles/main.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+body {
+  color: white;
+}
+</style>
+</head>
+
+<!--<body style="background:<?php echo $bc; ?>">-->
+<!--<body style="background:#278296">-->
+<body style="background-image:url(/Statics/image/daf0c51b9d16fdfa1e85a485b48f8c5495ee7b8b.jpg);background-size:cover;">
+
+<form action="__SELF__" method="post" >
+  <table cellspacing="0" cellpadding="0" style="margin-top: 350px" align="center">
+  <tr>
+    <td style="padding-left:50px">
+      <table>
+      <tr>
+        <td>站长账号</td>
+        <td><input type="text" name="managername" /></td>
+      </tr>
+      <tr>
+        <td>站长密码</td>
+        <td><input type="password" name="password" /></td>
+      </tr>
+      <tr>
+        <td>验证码</td>
+        <td><input type="text" name="yzm" />
+          <img src="__URL__/verify" onclick="this.src='__URL__/verify/'+Math.random()" />
+        </td>
+      </tr>
+        <tr><td><input type="submit" value="进入后台管理中心" class="button" />
+          <input type="reset"  value="重置" style="background-color:white"></td></tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+</form>
+<!--<br /><br />
+<div >
+  <a href="<?php echo U('index'); ?>" >管理员账号已登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;直接去后台首页(用户管理)>>></a>
+</div>
+<br /><br />
+<div >
+  <a href="<?php echo U('index1'); ?>" >管理员账号已登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;直接去后台副页(留言管理)>>></a>
+</div>-->
+</body>

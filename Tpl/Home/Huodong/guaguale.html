@@ -1,0 +1,206 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+    <!--   作者百度ID:你是shou啊   -->
+
+    <head>
+        <title>刮刮乐</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+
+        <script type="text/javascript" src="/Statics/js/guaguale.min.js"></script><!-- JS -->
+
+        <script type="text/javascript" src="/Statics/js/milo.min.js"></script><!--腾讯js-->
+
+        <link href="/Statics/css/guaguale.min.css" rel="stylesheet" type="text/css" /><!-- css -->
+        
+    </head>
+
+
+    <body bgColor="#99cc66">
+
+
+        <h1>刮刮乐</h1>
+        <!-- 购买刮刮卡区域 -->
+        <div id="goumai">
+        <span id="qb10"><input id="qb_10" type="image" src="/Statics/image/guaguale_image/10qb.png" onclick="disp_confirm_10()" title="花费10QB充值1000CF点(赠送刮刮卡1张)" /></span>
+        <span id="qb100"><input id="qb_100" type="image" src="/Statics/image/guaguale_image/100qb.png" onclick="disp_confirm_100()" title="花费100QB充值10000CF点(赠送刮刮卡11张)" /></span>
+        </div>
+        <br /><br /><br /><br />
+        <div id="shuoming_jifen">
+            <div id="shuoming"></div>
+            <div id="jifen"><div id="kehuodejifen"><b>刮刮卡可获得积分</b></div><image title="刮刮卡可获得积分" src="/Statics/image/guaguale_image/jifen.png" /></div>
+            <!--滚动字幕区域-->
+            <div id="zhongjianggonggao_1">
+                <div id="zhongjianggonggao"><b>中奖公告</b></div>
+                <div id="andyscroll">
+                    <div id="scrollmessage">
+                        <ul id="ul"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 刮一刮区域 -->
+        <div id="guayigua">
+        <span class="gua1"><div><image title="此枪一出，犹如冥界死神降临，横扫一切战场敌人" src="/Statics/image/guaguale_image/sishen.jpg" /></div><br /><div id="gua_1"><input type="image" src="/Statics/image/guaguale_image/guayixia.png" onclick="sishen()" title="消耗1张刮刮卡" /></div><br /><div><input id="0001" type="image" src="/Statics/image/guaguale_image/98.png" onclick="duihuan_sishen_before()" title="98积分兑换" /></div></span>
+        <span class="gua1"><div><image title="银色的枪身闪耀着点点寒光，如受风神加护的利刃，静待着猎物的到来" src="/Statics/image/guaguale_image/wuying.png" /></div><br /><div id="gua_2"><input type="image" src="/Statics/image/guaguale_image/guayixia.png" onclick="wuying()" title="消耗1张刮刮卡" /></div><br /><div><input id="0002" type="image" src="/Statics/image/guaguale_image/98.png" onclick="duihuan_wuying_before()" title="98积分兑换" /></div></span>
+        <span class="gua1"><div><image title="整个枪身被一条飞翔的银龙缠绕，同时龙的头部成为了狙击的瞄准镜，整个武器与银龙图案完美相融，极具收藏价值" src="/Statics/image/guaguale_image/tianlong.png" /></div><br /><div id="gua_3"><input type="image" src="/Statics/image/guaguale_image/guayixia.png" onclick="tianlong()" title="消耗1张刮刮卡" /></div><br /><div><input id="0003" type="image" src="/Statics/image/guaguale_image/80.png" onclick="duihuan_tianlong_before()" title="80积分兑换" /></div></span>
+        <span class="gua1"><div><image title="暗金色的龙骨刀身，鲜红的龙爪握把，这是屠龙勇者的神兵" src="/Statics/image/guaguale_image/tulong.png" /></div><br /><div id="gua_4"><input type="image" src="/Statics/image/guaguale_image/guayixia.png" onclick="tulong()" title="消耗1张刮刮卡" /></div><br /><div><input id="0004" type="image" src="/Statics/image/guaguale_image/60.png" onclick="duihuan_tulong_before()" title="60积分兑换" /></div></span>
+        <span class="gua1"><div><image title="如墨般沉郁的枪身中跃动着血色的修罗魂，它每一次出现都将用它的子弹和利刃惩罚敌人" src="/Statics/image/guaguale_image/xiuluo.jpg" /></div><br /><div id="gua_5"><input type="image" src="/Statics/image/guaguale_image/guayixia.png" onclick="xiuluo()" title="消耗1张刮刮卡" /></div><br /><div id="gua_5_1"><input id="0005" type="image" src="/Statics/image/guaguale_image/50.png" onclick="duihuan_xiuluo_before()" title="50积分兑换" /></div></span>
+        <span class="gua1"><div><image title="献给王者的礼物，只有最强的人才能拥有它" src="/Statics/image/guaguale_image/wangzhezhixin.jpg" /></div><br /><div id="gua_6"><input type="image" src="/Statics/image/guaguale_image/guayixia.png" onclick="wangzhezhixin()" title="消耗1张刮刮卡" /></div><br /><div id="gua_6_1"><input type="image" src="/Statics/image/guaguale_image/bukeduihuan.png" disabled="disabled" title="不可兑换" /></div></span>
+        </div>
+        <!--统计区域-->
+        <br /><br /><br />
+        <div id="ok"></div>
+        <div id="tongji1">
+        <div id="tongji">
+            剩余积分&nbsp;&nbsp;<font color="red" size="5"><span id="result5"><?php echo $jifen; ?></span></font>&nbsp;&nbsp;分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue" size="4"><span id="tishi"></span></font><br /><br />
+            剩余刮刮卡&nbsp;&nbsp;<font color="red" size="5"><span id="result3"><?php echo $guaguaka; ?></span></font>&nbsp;&nbsp;张<br /><br />
+            刮卡次数&nbsp;&nbsp;<font color="red" size="5"><span id="result1"><?php echo $guaka_count; ?></span></font>&nbsp;&nbsp;次<br /><br />
+            花费&nbsp;&nbsp;<font color="red" size="5"><span id="result4"><?php echo $pay; ?></span></font>&nbsp;&nbsp;QB<br /><br /><br />
+        </div>
+        <input type="image" src="/Statics/image/guaguale_image/shujushuaxin.jpg" onclick="ajax_get_tongji_data()" title="数据异常？点我刷新" />
+        </div>
+        <br /><br /><br /><br />
+        <!--<hr />
+        <div id="xiamian">
+            <br />
+            <font size="5"><div id="youxicangkubiaoti">游戏仓库</div></font><br />
+            <div id="youxicangku_head">
+                <span id="youxicangku_head1"><font color="blue" size="4">武器/角色&nbsp;[</font><font color="red" size="4"><span id="count">0</span></font><font color="blue" size="4">]</font></span>
+                &lt;!&ndash;<span id="youxicangku_head2"></span>&ndash;&gt;
+                <span id="youxicangku_head3">CF点&nbsp;&nbsp;<font color="red" size="4"><span id="cfdianyue">0</span></font></span>
+            </div>
+            <div id="youxicangku">
+                <span id="wuqijuesedaoju"></span>
+            </div>
+
+        </div>-->
+        <!--吐槽区域-->
+        <!--<div id="tucao">
+            <form>
+                <input name="data" type="text" placeholder="请释放你的口水" size="60" maxlength='66' id="oText" style="border:3px solid lawngreen;" onfocus="borderColor(this);" onblur="clearTimeout(oTime);" />
+                <input type="button" value="吐槽作者" onclick="tucao()" />
+                <input type="button" value="看看大家怎么吐槽" onclick="look()" />
+            </form>
+        </div>-->
+
+        <!--<div id="see1"><font color="#5B00AE" size="2"><b><div id="see"></div></b></font></div>-->
+
+        <!--<div id="zuozhe"><font size="1">网页作者百度ID:你是shou啊</font></div>-->
+
+        <div id="head">
+            <image src="<?php echo $head; ?>" title="我的头像" /><br />
+            <b><font color='blue' size='4'><?php echo $_SESSION['ok']['username']; ?></font></b>
+        </div>
+
+        <div id="myqb_mycfdian">
+            <input type="button" value="查看游戏仓库" style="background:springgreen" onclick="TGDialogS('youxicangku_box')" title="查看游戏仓库" />&nbsp;
+            <font size="1">我的QB</font><font color="#ff4500" size="3"><b><span id="myqb"><?php echo $myqb; ?></span></b></font>
+            <font size="1">我的CF点</font><font color="#1e90ff" size="3"><b><span id="mycfdian"><?php echo $mycfdian; ?></span></b></font>
+            <input type="image" src="/Statics/image/guaguale_image/shujushuaxin_1.jpg" onclick="ajax_get_myqb_mycfdian()" title="数据异常？点我刷新" />
+        </div>
+
+
+        <div id="chakanjilu">
+            <input type="button" value="查看充值记录" style="background:orangered" onclick="TGDialogS('chongzhijilu_box')" title="查看充值记录" /><br />
+            <input type="button" value="查看刮卡记录" style="background:greenyellow" onclick="TGDialogS('guakajilu_box')" title="查看刮卡记录" /><br />
+            <input type="button" value="查看兑换记录" style="background:orange" onclick="TGDialogS('duihuanjilu_box')" title="查看兑换记录" />
+        </div>
+
+        <div id="huodongshuoming">
+            <input type="button" value="活动说明" style="background:yellow" onclick="alert('<?php echo $huodongshuoming; ?>')" title="活动说明" />&nbsp;
+            <a href="<?php echo U('Login/index'); ?>" title="返回首页"><b><font size="2" color="#663399">返回首页</font></b></a>
+        </div>
+
+        <!--充值记录弹出层-->
+        <div id="chongzhijilu_box" style="display:none;background-color:#C2C287;">
+            <div id="chongzhijilu"></div>
+            <div id="chongzhijilu_page"></div>
+            <br />
+            <a href="javascript:showDialog.hide()" title="关闭">×</a>
+        </div>
+
+        <!--刮卡记录弹出层-->
+        <div id="guakajilu_box" style="display:none;background-color:#C2C287;">
+            <div id="guakajilu"></div>
+            <div id="guakajilu_page"></div>
+            <br />
+            <a href="javascript:showDialog.hide()" title="关闭">×</a>
+        </div>
+
+        <!--兑换记录弹出层-->
+        <div id="duihuanjilu_box" style="display:none;background-color:#C2C287;">
+            <div id="duihuanjilu"></div>
+            <div id="duihuanjilu_page"></div>
+            <br />
+            <a href="javascript:showDialog.hide()" title="关闭">×</a>
+        </div>
+
+        <!--游戏仓库弹出层-->
+        <div id="youxicangku_box" style="display:none;width:505px;height:505px;overflow:auto;background-image:url('/Statics/image/');">
+            <div style="position:fixed;top:50px;">
+                <a href="javascript:showDialog.hide()" title="关闭">×</a>
+                <b>
+                    武器[<?php echo $count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    V[<?php echo $v_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    K[<?php echo $k_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    角色[<?php echo $juese_count; ?>]
+                </b>
+            </div>
+            <div id="youxicangku"></div>
+        </div>
+
+        <!--滚动字幕区域-->
+        <!--<div id="zhongjianggonggao"><b>中奖公告</b></div>
+        <div id="andyscroll">
+            <div id="scrollmessage">
+                <ul id="ul"></ul>
+            </div>
+        </div>-->
+
+        <!--滚动字幕js脚本-->
+        <script type="text/javascript">
+            var stopscroll = false;
+            var scrollElem = document.getElementById("andyscroll");
+            var marqueesHeight = scrollElem.style.height;
+            scrollElem.onmouseover = new Function('stopscroll = true');
+            scrollElem.onmouseout  = new Function('stopscroll = false');
+            var preTop = 0;
+            var currentTop = 0;
+            var stoptime = 0;
+            var leftElem = document.getElementById("scrollmessage");
+            scrollElem.appendChild(leftElem.cloneNode(true));
+            init_srolltext();
+            function init_srolltext(){
+                scrollElem.scrollTop = 0;
+                setInterval('scrollUp()', 50);//确定滚动速度的, 数值越小, 速度越快
+            }
+            function scrollUp(){
+                if(stopscroll) return;
+                currentTop += 2; //设为1, 可以实现间歇式的滚动; 设为2, 则是连续滚动
+                if(currentTop == 19) {
+                    stoptime += 1;
+                    currentTop -= 1;
+                    if(stoptime == 180) {
+                        currentTop = 0;
+                        stoptime = 0;
+                    }
+                }else{
+                    preTop = scrollElem.scrollTop;
+                    scrollElem.scrollTop += 1;
+                    if(preTop == scrollElem.scrollTop){
+                        scrollElem.scrollTop = 0;
+                        scrollElem.scrollTop += 1;
+                    }
+                }
+            }
+        </script>
+
+    </body>
+
+
+</html>

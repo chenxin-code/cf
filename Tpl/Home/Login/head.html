@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/Statics/css/register.css" type="text/css">
+<title>设置头像</title>
+</head>
+<body style="background-image:url();background-size:cover;">
+	<div class="login w990 bc mt10 regist" id="001">
+			<div class="login_form fl">
+				<!--<form action="__SELF__" method="post">-->
+				<form enctype="multipart/form-data" action="__SELF__" method="post">
+					<ul style="list-style:none;">
+						<li>
+							<td class="label">我的头像&nbsp;<image src="<?php echo $head; ?>" title="我的头像" /></td>
+						</li><br />
+						<li>
+							<table width="90%" class="table_form" align="center">
+								<ul id="pic_ul">
+									<li><input type="file" name="pic[]" /></li>
+								</ul>
+							</table>
+						</li><br /><br /><br />
+						<span id="update"><input type="submit" value="上传头像" style="background-color:lightskyblue" /></span>
+						<input type="reset" value="重置" class="button" style="background-color:greenyellow" />
+					</ul>
+				</form>
+				<br />
+				<div>
+					<a href="<?php echo U('index'); ?>">返回首页>>></a>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
+
+
+
+
+	

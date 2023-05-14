@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>点赞记录</title>
+    <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+    <!-- 时间插件引入 -->
+    <link href="/Statics/datepicker/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="/Statics/datepicker/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/Statics/datepicker/datepicker-zh_cn.js"></script>
+</head>
+<body bgColor="#cccccc">
+
+<h3><font color='#d2691e' size='5'>点赞记录</font></h3>
+
+<!--<form method="post" action="__SELF__" name="listForm">-->
+<form id="search">
+
+    点赞记录ID
+    <input type="text" name="id" size="12" value="" />
+    用户名
+    <input type="text" name="username" size="12" value="" />
+    用户ID
+    <input type="text" name="userid" size="12" value="" />
+    <br />点赞时间
+    <input id="dianzantime1" type="text" name="dianzantime1" size="11" value="" placeholder="开始日期" />
+    <input id="dianzantime2" type="text" name="dianzantime2" size="11" value="" placeholder="结束日期" />
+    <br />点赞结果
+    <select name="dianzan">
+        <option value="全部">全部</option>
+        <option value="+10QB">+10QB</option>
+        <option value="+20QB">+20QB</option>
+        <option value="+30QB">+30QB</option>
+        <option value="+40QB">+40QB</option>
+        <option value="+50QB">+50QB</option>
+        <option value="+60QB">+60QB</option>
+        <option value="+70QB">+70QB</option>
+        <option value="+80QB">+80QB</option>
+        <option value="+90QB">+90QB</option>
+        <option value="+100QB">+100QB</option>
+        <option value="首赞+100QB">首赞+100QB</option>
+    </select>
+
+
+
+    <br /><img src="/Statics/admin_image/icon_search.gif" width="26" height="22" border="0" alt="search" />
+    <input type="button" value="搜索记录" onclick="getDianzan(1)" style="background-color:peachpuff" />
+    <input type="reset"  value="重置" style="background-color:lightgreen" />
+</form>
+
+<div id='searchresult'><image src="/Statics/admin_image/2787117_161300358107_1.gif" /></div>
+
+<div id='show'></div>
+
+<!--<div><form>第<input id='page1' type="text" />页<input type="button" value="go" onclick="go()" /></form></div>-->
+<br />
+<form id="form">
+    <input name="data" id="goto" type="text" placeholder="跳转至..." size="7" style="border:2px solid lawngreen;" onfocus="borderColor(this);" onblur="clearTimeout(oTime);" />
+    <input type="button" value="go" onclick="go()" />
+</form>
+
+<!-- 时间插件调用 -->
+<script type="text/javascript">
+    $("#dianzantime1").datepicker({ dateFormat: "yy-mm-dd" });
+    $("#dianzantime2").datepicker({ dateFormat: "yy-mm-dd" });
+</script>
+
+<!--表单单元格鼠标移动背景色变化-->
+<!--<script type="text/javascript" charset="utf-8" src="/statics/Js/tron.js"></script>-->
+
+    <!--********************   分割线   ***************************-->
+
+<script type="text/javascript">
+    /**
+     获取某一页的点赞记录并且覆盖上一页的
+     **/
+    function getDianzan(p)
+    {
+
+        $.ajax({
+            type:"post",
+            url:"ajaxGetDianzan/p/"+p,
+            //data:fd,
+            data:$('#search').serialize(),//传递搜索条件的关键代码
+            //dataType:"json",
+            success:function(data)
+            {
+
+                document.getElementById('goto').value="";
+                //console.log(data.info.data);
+
+                //var str = JSON.stringify(data);//json对象转换为字符串
+                var html='<form method="post" action="" name="listForm"><table border="1px" cellspacing="0px" width="100%" style="border: solid 1px;" cellpadding="0" cellspacing="0">' +
+                        '<tr style="width:30px;"><th>点赞记录ID</th><th>用户ID</th><th>用户名</th><th>点赞结果</th><th>点赞时间</th></tr>';
+                //var data= preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", data);
+
+                //var p=p;
+                //console.log(p);
+
+                //遍历
+                $(data.info.data).each(function(k,v){
+
+                    v.dianzantime=getLocalTime(v.dianzantime);
+
+                    if(v.dianzan=='+10QB'){v.dianzan='<font color="#696969">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+20QB'){v.dianzan='<font color="#1e90ff">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+30QB'){v.dianzan='<font color="#9370db">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+40QB'){v.dianzan='<font color="#20b2aa">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+50QB'){v.dianzan='<font color="#32cd32">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+60QB'){v.dianzan='<font color="#483d8b">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+70QB'){v.dianzan='<font color="#556b2f">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+80QB'){v.dianzan='<font color="#b8860b">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+90QB'){v.dianzan='<font color="#ff4500">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='+100QB'){v.dianzan='<font color="#db7093">'+v.dianzan+'</font>';}
+                    else if(v.dianzan=='首赞+100QB'){v.dianzan='<font color="#c71585">'+v.dianzan+'</font>';}
+
+                    //console.log(p);
+
+                    //核心语句   不能有</table></form>标签闭合 遍历完后才能加上闭合标签
+                    html +='<tr><th>'+v.id+'</th><th>'+v.userid+'</th><th><font color="blue" size="4">'+v.username+'</font></th><th>'+v.dianzan+'</th><th>'+v.dianzantime+'</th></tr>';
+
+                });
+
+                html=html+'</table></form>';//最后才加上闭合标签</table></form>
+
+                $("#searchresult").replaceWith("<div id='searchresult'>"+html+"</div>");
+
+                //console.log(parseInt(p)-1);
+                //console.log(parseInt(p)+1);
+                var prev=parseInt(p)-1<=0?1:parseInt(p)-1;
+                var next=parseInt(p)+1>data.info.pageNumber?data.info.pageNumber:parseInt(p)+1;
+                document.getElementById('show').innerHTML='<br /><font size="1">当前页/总页数</font>&nbsp;<b><font color="red" size="4">'+
+                        p+'</font></b>/<b><font color="red" size="4">'+data.info.pageNumber+'</font></b>&nbsp;<font size="2">共</font><b><font color="#1e90ff" size="4">'+
+                        data.info.where_count+'</font></b><font size="2">条记录</font>&nbsp;<font size="2">占总记录数的百分比为</font>&nbsp;<b><font color="#32cd32" size="4">'+
+                        data.info.percent+'%</font></b><br /><br /><input type="button" value="<<" onclick="getDianzan(1)" />'+
+                        '<input type="button" value="<" onclick="getDianzan('+prev+')" /><input type="button" value=">" onclick="getDianzan('+
+                        next+')" /><input type="button" value=">>" onclick="getDianzan('+data.info.pageNumber+')" />';
+
+            },
+            beforeSend: function(){
+
+                $('#searchresult').html('<image src="/Statics/admin_image/2787117_161300358107_1.gif" />');//请求未完成时显示加载中图片
+
+            }
+        });
+    }
+
+
+
+    /**
+     跳转至xx页
+     **/
+    function go()
+    {
+        var page=document.getElementById("goto").value;
+        //alert(page);
+
+        getDianzan(page);//调用函数
+
+
+    }
+
+
+    //跳转输入框样式美化
+    function borderColor(){
+        if(self['goto'].style.borderColor=='lawngreen'){
+            self['goto'].style.borderColor = 'white';
+        }else{
+            self['goto'].style.borderColor = 'lawngreen';
+        }
+        oTime = setTimeout('borderColor()',300);
+    }
+
+    window.onload = function()
+    {
+        getDianzan(1);
+        //search_1();
+    }
+
+
+    //JS时间戳转换函数
+    function getLocalTime(nS){
+        return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+    }
+</script>
+
+</body>
+</html>

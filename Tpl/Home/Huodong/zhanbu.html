@@ -1,0 +1,236 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+    <!--   作者百度ID:你是shou啊   -->
+
+    <head>
+        <title>斯沃特的占卜牌</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+        <script type="text/javascript" src="/Statics/js/zhanbu.min.js"></script><!-- JS -->
+
+        <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+
+        <script type="text/javascript" src="/Statics/js/milo.min.js"></script><!--腾讯js-->
+
+
+        <link href="/Statics/css/zhanbu.min.css" rel="stylesheet" type="text/css" /><!-- css -->
+
+    </head>
+
+
+    <body bgColor="#99cc66">
+
+        <!--<a name="top"></a>--><!--锚点链接-->
+        <h1>斯沃特的占卜牌</h1>
+        <!-- 购买占卜球区域 -->
+        <div id="goumai">
+        <span id="qb10"><input id="qb_10" type="image" src="/Statics/image/zhanbu_image/10qb.png" onclick="disp_confirm_10()" title="10QB购买1个占卜球" /></span>
+        <span id="qb100"><input id="qb_100" type="image" src="/Statics/image/zhanbu_image/100qb.png" onclick="disp_confirm_100()" title="100QB购买11个占卜球" /></span>
+        </div>
+        <br /><br /><br />
+        <font size="5"><div id="jinggao"></div></font>
+        <br />
+        <!-- 卡牌区域 -->
+        <div id="kapai">
+        <span id="kapai1"></span>
+        <span id="kapai2"></span>
+        <span id="kapai3"></span>
+        </div>
+        <br /><br />
+        <font size="4"><div id="tishi"></div></font>
+        <!-- <input type="button" value="卡牌1" onclick="fff(1)" />
+        <input type="button" value="卡牌2" onclick="fff(2)" />
+        <input type="button" value="卡牌3" onclick="fff(3)" /> -->
+        <br /><br />
+        <div id="ckbxsydj_cz">
+        <span id="chakanbaoxiangsuoyoudaoju"><input type="image" src="/Statics/image/zhanbu_image/chakanbaoxiangsuoyoudaoju.png" onclick="TGDialogS('chakansuoyoukapaizhengmian_box')" title="查看所有卡牌正面" /></span>
+        <span id="chongzhi"><input type="image" src="/Statics/image/zhanbu_image/chongzhibaoxiang.png" onclick="chongzhi()" title="重置卡牌" /></span>
+        </div>
+        <br /><br /><br /><br /><br />
+        <!--统计区域-->
+        <div id="tongji">
+            剩余占卜球&nbsp;&nbsp;<font color="red" size="5"><span id="result3"><?php echo $zhanbuqiu; ?></span></font>&nbsp;&nbsp;个<br /><br />
+            中奖次数/翻牌次数&nbsp;&nbsp;&nbsp;<font color="red" size="5"><span id="result2"><?php echo $zhongjiang_count; ?></span></font><font size="5">/</font><font color="red" size="5"><span id="result1"><?php echo $fanpai_count; ?></span></font><br /><br />
+            消费&nbsp;&nbsp;<font color="red" size="5"><span id="result4"><?php echo $cost; ?></span></font>&nbsp;&nbsp;QB
+            &nbsp;&nbsp;&nbsp;<input type="image" src="/Statics/image/zhanbu_image/shujushuaxin.jpg" onclick="ajax_get_tongji_data()" title="数据异常？点我刷新" />
+        </div>
+        <br /><br /><br /><br /><br /><br />
+        <!--<hr />-->
+        <!--<div id="xiamian">
+            <br />
+            &lt;!&ndash;<image src="./image/zancunxiang.png" />&ndash;&gt;
+            <div id="zancunxiangbiaoti">
+                <font size="5">暂存箱</font>
+            </div>
+            <font size="5"><div id="youxicangkubiaoti">游戏仓库</div></font><br />
+            <div id="zancunxiang"></div>
+            <div id="youxicangku">
+                CF点余额:&nbsp;&nbsp;&nbsp;<font color="red" size="5"><span id="cfdianyue">0</span></font><br /><br />
+                <font color="blue" size="5">武器/角色/道具:</font><br /><br />
+                <span id="wuqijuesedaoju"></span>
+            </div>
+            &lt;!&ndash; <font color="red" size="6"><div id="result"></div></font> &ndash;&gt;
+            &lt;!&ndash;<div id="mdlj"><a href="zhanbu.html#top"><image src="./image/mdlj.png" title="返回顶部" /></a></div>&ndash;&gt;&lt;!&ndash;锚点链接&ndash;&gt;
+        </div>-->
+        <!--<div id="zuozhe"><font size="1">网页作者百度ID:你是shou啊</font></div>-->
+
+        <div id="head">
+            <image src="<?php echo $head; ?>" title="我的头像" /><br />
+            <b><font color='blue' size='4'><?php echo $_SESSION['ok']['username']; ?></font></b>
+        </div>
+
+        <div id="myqb_mycfdian">
+            <input type="button" value="查看游戏仓库" style="background:springgreen" onclick="TGDialogS('youxicangku_box')" title="查看游戏仓库" />&nbsp;
+            <font size="1">我的QB</font><font color="#ff4500" size="3"><b><span id="myqb"><?php echo $myqb; ?></span></b></font>
+            <font size="1">我的CF点</font><font color="#1e90ff" size="3"><b><span id="mycfdian"><?php echo $mycfdian; ?></span></b></font>
+            <input type="image" src="/Statics/image/zhanbu_image/shujushuaxin_1.jpg" onclick="ajax_get_myqb_mycfdian()" title="数据异常？点我刷新" />
+        </div>
+
+        <div id="chakanjilu">
+            <input type="button" value="查看购买记录" style="background:hotpink" onclick="TGDialogS('goumaijilu_box')" title="查看购买记录" /><br />
+            <input type="button" value="查看翻牌记录" style="background:deepskyblue" onclick="TGDialogS('fanpaijilu_box')" title="查看翻牌记录" />
+        </div>
+
+        <div id="huodongshuoming">
+            <input type="button" value="活动说明" style="background:yellow" onclick="alert('<?php echo $huodongshuoming; ?>')" title="活动说明" />&nbsp;
+            <a href="<?php echo U('Login/index'); ?>" title="返回首页"><b><font size="2" color="#663399">返回首页</font></b></a>
+        </div>
+
+        <!--查看所有卡牌正面弹出层-->
+        <div id="chakansuoyoukapaizhengmian_box" style="display:none;width:752px;height:328px;overflow:auto;background-color:#99cc66;">
+            <div style="float:right"><a href="javascript:showDialog.hide()" title="关闭">×</a></div>
+            <div class="news">
+                <ul>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/huoqilin.jpg" title="整个枪身与火麒麟完美相融，是勇士不可或缺的神器，极具收藏价值" onmouseover="this.style.border='1px solid orange'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/heiwushi.jpg" title="增加了野兽样式，霸气威武" onmouseover="this.style.border='1px solid blue'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/leishen.jpg" title="整个枪身有蓝色的闪电环绕，犹如雷神下凡一般，摧毁一切与之对抗的敌人" onmouseover="this.style.border='1px solid red'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/heilong.jpg" title="整个枪身与一条黑龙完美相融，具有极高的战斗属性" onmouseover="this.style.border='1px solid yellow'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/heiqishi.jpg" title="冷酷的黑色盔甲，若隐若现的红色微光，如黑夜中的骑士一般静静的等待出征" onmouseover="this.style.border='1px solid blue'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/jiguang.jpg" title="基本构造相同，但外型改造成了鲨鱼流线感觉" onmouseover="this.style.border='1px solid pink'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/huimie.jpg" title="暗黑与深红相间的枪身预示着毁灭一切的力量" onmouseover="this.style.border='1px solid red'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/700cfdian.png" title="700CF点" onmouseover="this.style.border='1px solid blue'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/600cfdian.png" title="600CF点" onmouseover="this.style.border='1px solid pink'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/500cfdian.png" title="500CF点" onmouseover="this.style.border='1px solid white'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/400cfdian.png" title="400CF点" onmouseover="this.style.border='1px solid yellow'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/300cfdian.png" title="300CF点" onmouseover="this.style.border='1px solid blue'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/200cfdian.png" title="200CF点" onmouseover="this.style.border='1px solid purple'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                    <li>
+                        <img src="/Statics/image/zhanbu_image/100cfdian.png" title="100CF点" onmouseover="this.style.border='1px solid pink'" onmouseout="this.style.border='1px solid green'" style="border:1px solid green" />
+                    </li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <br />
+        </div>
+
+        <!--购买记录弹出层-->
+        <div id="goumaijilu_box" style="display:none;background-color:#C2C287;">
+            <div id="goumaijilu"></div>
+            <div id="goumaijilu_page"></div>
+            <br />
+            <a href="javascript:showDialog.hide()" title="关闭">×</a>
+        </div>
+
+        <!--翻牌记录弹出层-->
+        <div id="fanpaijilu_box" style="display:none;background-color:#C2C287;">
+            <div id="fanpaijilu"></div>
+            <div id="fanpaijilu_page"></div>
+            <br />
+            <a href="javascript:showDialog.hide()" title="关闭">×</a>
+        </div>
+
+        <!--游戏仓库弹出层-->
+        <div id="youxicangku_box" style="display:none;width:505px;height:505px;overflow:auto;background-image:url('/Statics/image/');">
+            <div style="position:fixed;top:50px;">
+                <a href="javascript:showDialog.hide()" title="关闭">×</a>
+                <b>
+                    武器[<?php echo $count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    V[<?php echo $v_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    K[<?php echo $k_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    角色[<?php echo $juese_count; ?>]
+                </b>
+            </div>
+            <div id="youxicangku"></div>
+        </div>
+
+        <!--滚动字幕区域-->
+        <div id="zhongjianggonggao"><b>中奖公告</b></div>
+        <div id="andyscroll">
+            <div id="scrollmessage">
+                <ul id="ul"></ul>
+            </div>
+        </div>
+
+        <!--滚动字幕js脚本-->
+        <script type="text/javascript">
+            var stopscroll = false;
+            var scrollElem = document.getElementById("andyscroll");
+            var marqueesHeight = scrollElem.style.height;
+            scrollElem.onmouseover = new Function('stopscroll = true');
+            scrollElem.onmouseout  = new Function('stopscroll = false');
+            var preTop = 0;
+            var currentTop = 0;
+            var stoptime = 0;
+            var leftElem = document.getElementById("scrollmessage");
+            scrollElem.appendChild(leftElem.cloneNode(true));
+            init_srolltext();
+            function init_srolltext(){
+                scrollElem.scrollTop = 0;
+                setInterval('scrollUp()', 50);//确定滚动速度的, 数值越小, 速度越快
+            }
+            function scrollUp(){
+                if(stopscroll) return;
+                currentTop += 2; //设为1, 可以实现间歇式的滚动; 设为2, 则是连续滚动
+                if(currentTop == 19) {
+                    stoptime += 1;
+                    currentTop -= 1;
+                    if(stoptime == 180) {
+                        currentTop = 0;
+                        stoptime = 0;
+                    }
+                }else{
+                    preTop = scrollElem.scrollTop;
+                    scrollElem.scrollTop += 1;
+                    if(preTop == scrollElem.scrollTop){
+                        scrollElem.scrollTop = 0;
+                        scrollElem.scrollTop += 1;
+                    }
+                }
+            }
+        </script>
+
+    </body>
+
+
+
+</html>

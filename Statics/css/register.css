@@ -1,0 +1,13 @@
+/*
+@功能：登录页面及用户注册页面css
+@作者：diamondwang
+@时间：2013年11月11日
+*/
+
+/*注册部分css*/
+.regist .login_form{width: 630px; border: 0; }
+.regist .login_btn:hover{background-position: 0 -34px;}
+.regist .login_form p{color: #aaa; margin-left: 60px; margin-top: 5px;}
+#001{margin:0 auto;}
+
+

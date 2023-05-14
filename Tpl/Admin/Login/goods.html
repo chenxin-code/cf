@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品信息</title>
+    <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+    <script type="text/javascript">
+        /**
+         获取所有的商品信息
+         **/
+        function getGoods()
+        {
+
+            $.ajax({
+                //type:"post",
+                url:"ajaxGetGoods",
+                //data:fd,
+                //dataType:"json",
+                success:function(data)
+                {
+                    //console.log(data.info.data);
+
+                    //var str = JSON.stringify(data);//json对象转换为字符串
+                    var html='<form method="post" action="" name="listForm"><table border="1px" cellspacing="0px" width="100%" style="border: solid 1px;" cellpadding="0" cellspacing="0">' +
+                            '<tr style="width:30px;"><th>商品ID</th><th>商品名</th><th>商品图片</th><th>原价QB'+
+                            '</th><th>原价CF点</th><th>当前折扣</th><th>修改当前折扣</th><th>库存量</th><th>进货</th><th>是否下架</th></tr>';
+                    //var data= preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", data);
+
+                    //var p=p;
+                    //console.log(p);
+
+                    //遍历
+                    $(data.info).each(function(k,v){
+
+                        if(v.zhekou==10){v.zhekou='<b><font color="darkgray">原价</font></b>';}
+                        else if(v.zhekou==9){v.zhekou='<b><font color="#00bfff">9折</font></b>';}
+                        else if(v.zhekou==8){v.zhekou='<b><font color="#ff4500">8折</font></b>';}
+
+                        if(v.number<=0)
+                        {
+                            var shifouxiajia='<font color="red">已下架</font>';
+                        }
+                        else
+                        {
+                            var shifouxiajia='<font color="#32cd32">未下架</font>';
+                        }
+
+                        //console.log(p);
+
+                        //核心语句   不能有</table></form>标签闭合 遍历完后才能加上闭合标签
+                        html +='<tr><th>'+v.goodsid+'</th><th>'+v.goodsname+'</th><th><image src="'+v.logo+'" title="'+v.desc+'" /></th><th>'
+                                +v.qb+'</th><th>'+v.cfdian+'</th><th>'+v.zhekou+'</th><th><input type="button" value="原价" onclick="update_zhekou('+v.goodsid+',10)" style="background-color:darkgray" />'+
+                                '<input type="button" value="9折" onclick="update_zhekou('+v.goodsid+',9)" style="background-color:#00bfff" />'+
+                                '<input type="button" value="8折" onclick="update_zhekou('+v.goodsid+',8)" style="background-color:#ff4500" /></th><th><font color="blue" size="5">'+v.number+'</font></th>'+
+                                '<th><input type="button" value="+1" onclick="jinhuo('+v.goodsid+',1)" style="background-color:springgreen" />'+
+                                '<input type="button" value="+2" onclick="jinhuo('+v.goodsid+',2)" style="background-color:orange" />'+
+                                '<input type="button" value="+5" onclick="jinhuo('+v.goodsid+',5)" style="background-color:mediumpurple" />'+
+                                '<input type="button" value="+10" onclick="jinhuo('+v.goodsid+',10)" style="background-color:hotpink" /></th><th>'+shifouxiajia+'</th></tr>';
+
+                    });
+
+                    html=html+'</table></form>';//最后才加上闭合标签</table></form>
+
+                    $("#searchresult").replaceWith("<div id='searchresult'>"+html+"</div>");
+
+                },
+                beforeSend: function(){
+
+                    $('#searchresult').html('<image src="/Statics/admin_image/2787117_161300358107_1.gif" />');//请求未完成时显示加载中图片
+
+                }
+            });
+        }
+
+        //ajax修改商品当前折扣
+        function update_zhekou(goodsid,zhekou){
+            //alert(goodsid);alert(zhekou);
+            $.get('updateZheKou',{goodsid:goodsid,zhekou:zhekou},function(msg){
+                if(msg=='无效修改！')
+                {
+                    alert(msg);
+                }
+                else
+                {
+                    alert(msg);
+                    getGoods();
+                }
+            });
+
+        }
+
+        //ajax进货（增加库存量）
+        function jinhuo(goodsid,x){
+            //alert(goodsid);alert(x);
+            $.ajax({
+                url:'showGoodsname',//根据接收到的商品ID去查询对应的商品名称并将其返回
+                data:{goodsid:goodsid},
+                //dataType:'json',
+                type:'get',
+                success:function(data)
+                {
+                    var r=confirm('确定要给'+data+'进'+x+'件货吗?');
+                    if(r==true)
+                    {
+                        $.get('jinHuo',{goodsid:goodsid,x:x},function(msg){
+                            alert(msg);
+                            getGoods();
+                        });
+                        //document.write("You pressed OK!");
+                    }
+                    else
+                    {
+                        //document.write("You pressed Cancel!");
+                    }
+                }
+            });
+        }
+
+        window.onload = function()
+        {
+            getGoods();
+        }
+
+    </script>
+</head>
+<body bgColor="#cccccc">
+
+<h3><font color='#ff1493' size='5'>商品信息</font></h3>
+
+<div id='searchresult'><image src="/Statics/admin_image/2787117_161300358107_1.gif" /></div>
+
+<!--表单单元格鼠标移动背景色变化-->
+<!--<script type="text/javascript" charset="utf-8" src="/statics/Js/tron.js"></script>-->
+
+</body>
+</html>

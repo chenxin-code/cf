@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/Statics/css/register.min.css" type="text/css">
+	<script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+	<title>注册</title>
+
+	<script type="text/javascript">
+
+		function checkname(){
+			var nm=document.getElementById('check').value;
+			nm=encodeURIComponent(nm);
+			var xhr=new XMLHttpRequest();
+			xhr.onreadystatechange=function(){
+				if(xhr.readyState==4){
+					//alert(xhr.responseText);
+					document.getElementById('ok1').innerHTML=xhr.responseText;
+					setTimeout("hideresult1()",8000);
+				}
+			}
+			xhr.open('get','checkusername?username='+nm);
+			xhr.send(null);
+		}
+
+		//加一层js判断 减轻服务器的压力 良好的用户体验
+		function checkpassword(){
+			var password1=document.getElementById('password1').value;
+			var password2=document.getElementById('password2').value;
+			if(password1&&password2){
+				if(!(password1==password2)){
+					document.getElementById('register').innerHTML='<input type="button" value="注册" disabled="disabled" style="background-color:darkgray" />';
+					document.getElementById('ok3').innerHTML='<font color="red">密码不一致 请重试</font>';
+					setTimeout("hideresult3()",6000);
+				}
+				else
+				{
+					document.getElementById('register').innerHTML='<input type="button" value="注册" onclick="register()" style="background-color:red" />';
+					document.getElementById('ok3').innerHTML='<font color="#32cd32">密码一致</font>';
+					setTimeout("hideresult3()",6000);
+				}
+			}
+		}
+
+		function hideresult1(){
+			document.getElementById('ok1').innerHTML="";
+		}
+
+		function hideresult2(){
+			document.getElementById('ok2').innerHTML="";
+		}
+
+		function hideresult3(){
+			document.getElementById('ok3').innerHTML="";
+		}
+
+		//ajax注册
+		function register(){
+			var fm = document.getElementsByTagName('form')[0];//[0]代表第1个form元素
+			var fd = new FormData(fm);//收集数据
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState==4){
+					//alert(xhr.responseText);
+					document.getElementById('ok2').innerHTML = xhr.responseText;
+					//3s后使得注册的提示消息消失
+					setTimeout("hideresult2()",3000);
+					//如果注册成功 页面必须跳转
+					if(xhr.responseText=="注册成功! 请登录......"){
+						//JS页面重定向+延时器(3s后跳转至登录界面 保证3s的注册成功消息能够正常显示 同时保证注册成功消息消失后就能连贯不停顿地展示登录界面 所以要和前面的延时器设置时间一样都为3s)
+						setTimeout('window.location="login";',3000);
+					}
+				}
+			}
+			xhr.open('post','ajaxregister');
+			xhr.send(fd);
+		}
+
+		//thinkphp IS_AJAX 测试
+		/*function test(){
+
+			//结果：测试一下1
+			/!*$.ajax({
+			 type:"post",
+			 url:"ajaxregister",
+			 success:function(data)
+			 {
+			 alert(data);
+			 }
+			 });*!/
+
+			//结果：测试一下2
+			/!*var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState==4){
+					alert(xhr.responseText);
+				}
+			}
+			xhr.open('post','ajaxregister');
+			xhr.send(null);*!/
+		}*/
+
+	</script>
+
+</head>
+
+<!--<body style="background-image:url(/Statics/image/77e9dbed34a.jpg);background-size:cover;">-->
+<body>
+	<div class="login w990 bc mt10 regist" id="001">
+			<div class="login_form fl">
+				<!--<form action="__SELF__" method="post">-->
+				<form>
+					<ul style="list-style:none;">
+						<li>
+							<input type="text" class="txt" name="username" id="check" maxlength='40' placeholder="用户名" />
+							<input type="button" value="检查用户名" onclick="checkname()" />
+							<span id="ok1"></span>
+							<p>最好使用你的百度账号哦 方便站长确认信息呢 用户名无法更改哦</p>
+						</li>
+						<li>
+							<input type="password" class="txt" name="password1" id="password1" maxlength='16' placeholder="密码" onblur="checkpassword()" />
+							<p>密码随意设置啦 为了安全请不要设置你之前使用过的密码哦</p>
+						</li>
+						<li>
+							<input type="password" class="txt" name="password2" id="password2" maxlength='16' placeholder="确认密码" onblur="checkpassword()" />
+							<span id="ok3"></span>
+							<p>再输入一遍密码确认一下啦</p>
+						</li>
+						<li class="checkcode">
+							<input type="text" name="yzm" size="13" maxlength='3' placeholder="验证码" />
+							<img src="__URL__/verify" onclick="this.src='__URL__/verify/'+Math.random()" /><!-- 注意路径的正确写法!!! -->
+							<p>点击图片换一张</p>
+						</li>
+						<span id="register"><input type="button" value="注册" onclick="register()" style="background-color:red" /></span>
+						<input type="reset" value="重置" class="button" style="background-color:greenyellow" />
+						<font color="red"><span id="ok2"></span></font>
+					</ul>
+				</form>
+				<br />
+				<div>
+					<a href="<?php echo U('login'); ?>">返回登录>>></a>
+				</div>
+				<!--<br />
+				<div>
+					<a href="<?php echo U('index'); ?>">已登录 直接去首页>>></a>
+				</div>-->
+			</div>
+	</div>
+	<!--<input type="button" value="thinkphp的IS_AJAX的测试" onclick="test()" />-->
+</body>
+</html>
+
+
+
+
+	

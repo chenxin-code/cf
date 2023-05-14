@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公告/说明/告示设置</title>
+    <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+</head>
+<body bgColor="#cccccc">
+
+<h3><font color='#00008b' size='5'>公告/说明/告示设置</font></h3>
+
+<div id='result'><image src="/Statics/admin_image/2787117_161300358107_1.gif" /></div>
+
+<!--表单单元格鼠标移动背景色变化-->
+<!--<script type="text/javascript" charset="utf-8" src="/statics/Js/tron.js"></script>-->
+
+<script type="text/javascript">
+    /**
+     获取所有的公告/说明/告示
+     **/
+    function getNotice()
+    {
+
+        $.ajax({
+            url:"ajaxGetNotice",
+            success:function(data)
+            {
+
+                //console.log(data.info);
+
+                var html='<form method="post" action="" name="listForm"><table border="1px" cellspacing="0px" width="100%" style="border: solid 1px;" cellpadding="0" cellspacing="0">'+
+                        '<tr style="width:30px;"><th>ID</th><th>公告/说明/告示内容</th><th>修改内容</th></tr>';
+
+                //遍历
+                $(data.info).each(function(k,v){
+
+
+                    var color1=getRandomColor1();
+                    var color2=getRandomColor2();
+
+                    //核心语句   不能有</table></form>标签闭合 遍历完后才能加上闭合标签
+                    html +='<tr><th>'+v.noticeid+'</th><th><input type="text" style="width:1000px;height:25px;font-weight:900;color:'+color1+';background-color:'+color2+';" id="'+v.noticeid+'" value="'+v.content+
+                            '" /></th><th><input type="button" value="修改" title="修改内容" style="background-color:'+color2+';" onclick="update_content('+v.noticeid+')" /></th></tr>';
+
+                });
+
+                html=html+'</table></form>';//最后才加上闭合标签</table></form>
+
+                $("#result").replaceWith("<div id='result'>"+html+"</div>");
+
+            },
+            beforeSend: function(){
+
+                $('#result').html('<image src="/Statics/admin_image/2787117_161300358107_1.gif" />');//请求未完成时显示加载中图片
+
+            }
+        });
+    }
+
+    //ajax修改公告/说明/告示内容
+    function update_content(noticeid){
+        //alert(noticeid);
+        var content = $("#"+noticeid).val();
+        //alert(content);
+        $.get('updateContent',{noticeid:noticeid,content:content},function(msg){
+            alert(msg);
+            if(!(msg==='无效修改！'))
+            {
+                getNotice();
+            }
+        });
+
+    }
+
+    window.onload = function()
+    {
+        getNotice();
+    }
+
+    //随机返回一个深色（input输入框字体颜色，都为深色）
+    function getRandomColor1(){
+        var yongjiu_goods1 = ['red','blue','#AE00AE','#FF8000','#00A600','#408080','#AD5A5A','#AE8F00','#FF0080'];
+        function sendNum1(arr1)
+        {
+            return arr1[Math.floor(Math.random()*arr1.length)];
+        }
+        var thisgood1 = sendNum1(yongjiu_goods1);//调用函数返回一个随机生成的数组里的元素
+
+        return thisgood1;
+    }
+
+    //随机返回一个浅色（input输入框背景颜色和修改按钮背景颜色，都为浅色）
+    function getRandomColor2(){
+        var yongjiu_goods2 = ['#D3FF93','#D6D6AD','#DAB1D5','#CECEFF','#C4E1E1','#FFD9EC','#BBFFBB','#d3a4ff','#A3D1D1'];
+        function sendNum2(arr2)
+        {
+            return arr2[Math.floor(Math.random()*arr2.length)];
+        }
+        var thisgood2 = sendNum2(yongjiu_goods2);//调用函数返回一个随机生成的数组里的元素
+
+        return thisgood2;
+    }
+
+</script>
+
+</body>
+</html>

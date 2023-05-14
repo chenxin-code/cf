@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>游戏商城首页</title>
+    <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+    <script type="text/javascript" src="/Statics/js/milo.min.js"></script><!--腾讯js-->
+    <link href="/Statics/css/shopindex.min.css" rel="stylesheet" type="text/css" /><!-- css -->
+    <script type="text/javascript" src="/Statics/js/shopindex.min.js"></script><!-- JS -->
+</head>
+<body bgColor="#99cc66">
+<h1>游戏商城</h1>
+<div id="allgoods"></div>
+
+<!--<div class="class1">
+    <div class="class2"><image src="/Statics/image/shop_image/shenpanzhe.png" title="" /></div>
+    <div class="class3">
+        <div class="class4"><b>审判者（永久）</b></div>
+        <div class="class5"><b>售价：<font color="#ff4500">408</font>QB/<font color="#1e90ff">40800</font>CF点</b><image src="/Statics/image/shop_image/9zhe.png" /></div>
+        <div class="class6"><b>库存：<font color="#9370db">3</font>件</b></div>
+        <div class="class7"><image src="/Statics/image/shop_image/qb_goumai.png" title="" /></div>
+        <div class="class8"><image src="/Statics/image/shop_image/cfdian_goumai.png" title="" /></div>
+    </div>
+</div>-->
+
+<div id="head">
+    <image src="<?php echo $head; ?>" title="我的头像" /><br />
+    <b><font color='blue' size='4'><?php echo $_SESSION['ok']['username']; ?></font></b>
+</div>
+
+<div id="myqb_mycfdian">
+    <input type="button" value="查看游戏仓库" style="background:springgreen" onclick="TGDialogS('youxicangku_box')" title="查看游戏仓库" />&nbsp;
+    <font size="1">我的QB</font><font color="#ff4500" size="3"><b><span id="myqb"><?php echo $myqb; ?></span></b></font>
+    <font size="1">我的CF点</font><font color="#1e90ff" size="3"><b><span id="mycfdian"><?php echo $mycfdian; ?></span></b></font>
+    <input type="image" src="/Statics/image/shop_image/shujushuaxin_1.jpg" onclick="ajax_get_myqb_mycfdian()" title="数据异常？点我刷新" />
+</div>
+
+
+<div id="chakanjilu">
+    <input type="button" value="查看购买记录" style="background:deepskyblue" onclick="TGDialogS('goumaijilu_box')" title="查看购买记录" />
+</div>
+
+<div id="shangchenggaoshi">
+    <input type="button" value="商城告示" style="background:yellow" onclick="alert('<?php echo $shangchenggaoshi; ?>')" title="商城告示" />&nbsp;
+    <a href="<?php echo U('Login/index'); ?>" title="返回首页"><b><font size="2" color="#663399">返回首页</font></b></a>
+</div>
+
+<!--购买记录弹出层-->
+<div id="goumaijilu_box" style="display:none;background-color:lightskyblue;">
+    <div id="goumaijilu"></div>
+    <div id="goumaijilu_page"></div>
+    <br />
+    <a href="javascript:showDialog.hide()" title="关闭">×</a>
+</div>
+
+<!--游戏仓库弹出层-->
+<div id="youxicangku_box" style="display:none;width:505px;height:505px;overflow:auto;background-image:url('/Statics/image/');">
+    <div style="position:fixed;top:50px;">
+        <a href="javascript:showDialog.hide()" title="关闭">×</a>
+        <b>
+            武器[<?php echo $count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            V[<?php echo $v_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            K[<?php echo $k_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            角色[<?php echo $juese_count; ?>]
+        </b>
+    </div>
+    <div id="youxicangku"></div>
+</div>
+
+</body>
+</html>

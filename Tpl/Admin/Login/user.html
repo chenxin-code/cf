@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户信息</title>
+    <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+    <!-- 时间插件引入 -->
+    <link href="/Statics/datepicker/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" charset="utf-8" src="/Statics/datepicker/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/Statics/datepicker/datepicker-zh_cn.js"></script>
+    <!--显示/隐藏用户密码-->
+    <script type="text/javascript">
+
+        /*$(function(){
+            $('#toggle').click(function(){
+                $('.showpassword').toggle();
+            });
+        })*/
+
+        function toggle(){
+            $('.showpassword').toggle(1000);//jQuery中的toggle()方法可以切换元素的显示与隐藏状态，因此外面整个函数也同命名
+            //1000代表规定元素从可见到隐藏的速度（或者相反）  默认为0  可能的值：毫秒 （比如 1000）
+            //注意：该效果适用于通过 jQuery 隐藏的元素，或在 CSS 中声明 display:none 的元素（但不适用于 visibility:hidden 的元素）
+        }
+
+    </script>
+</head>
+<body bgColor="#cccccc">
+
+<!--<h2><font color='blue' size='6'>欢迎管理员来到后台首页</font></h2>
+<div ><a onclick="return confirm('确定要注销账号吗?');" href="<?php echo U('logout'); ?>" >  注销账号  </a></div><br />
+<div ><a href="<?php echo U('login'); ?>" >  返回登录界面(不注销)  </a></div>
+<br /><br /><br />
+<div ><a href="<?php echo U('index1'); ?>" >  留言管理(后台副页)>>>  </a></div>
+<br />-->
+<h3><font color='red' size='5'>用户信息</font></h3>
+
+<!--<form method="post" action="__SELF__" name="listForm">-->
+<form id="search">
+
+    用户名
+    <input type="text" name="username" size="12" value="" />
+    用户ID
+    <input type="text" name="userid" size="12" value="" />
+    <br />登录权限
+    <select name="loginroot">
+        <option value="全部">全部</option>
+        <option value="允许">允许</option>
+        <option value="禁止">禁止</option>
+    </select>
+    点赞权限
+    <select name="dianzanroot">
+        <option value="全部">全部</option>
+        <option value="允许">允许</option>
+        <option value="禁止">禁止</option>
+    </select>
+    聊天权限
+    <select name="chatroot">
+        <option value="全部">全部</option>
+        <option value="允许">允许</option>
+        <option value="禁止">禁止</option>
+    </select>
+    <br />注册时间
+    <input id="registertime1" type="text" name="registertime1" size="11" value="" placeholder="开始日期" />
+    <input id="registertime2" type="text" name="registertime2" size="11" value="" placeholder="结束日期" />
+
+
+
+    <br /><img src="/Statics/admin_image/icon_search.gif" width="26" height="22" border="0" alt="search" />
+    <input type="button" value="搜索用户" onclick="getUser(1)" style="background-color:lightskyblue" />
+    <input type="reset"  value="重置" style="background-color:lightgreen" />
+    <input type="button" value="显示/隐藏用户密码" onclick="toggle()" style="background-color:pink" />
+</form>
+
+<div id='searchresult'><image src="/Statics/admin_image/2787117_161300358107_1.gif" /></div>
+
+<div id='show'></div>
+
+<!--<div><form>第<input id='page1' type="text" />页<input type="button" value="go" onclick="go()" /></form></div>-->
+<br />
+<form id="form">
+    <input name="data" id="goto" type="text" placeholder="跳转至..." size="7" style="border:2px solid lawngreen;" onfocus="borderColor(this);" onblur="clearTimeout(oTime);" />
+    <input type="button" value="go" onclick="go()" />
+</form>
+
+<!-- 时间插件调用 -->
+<script type="text/javascript">
+    $("#registertime1").datepicker({ dateFormat: "yy-mm-dd" });
+    $("#registertime2").datepicker({ dateFormat: "yy-mm-dd" });
+</script>
+
+<!--表单单元格鼠标移动背景色变化-->
+<!--<script type="text/javascript" charset="utf-8" src="/statics/Js/tron.js"></script>-->
+
+    <!--********************   分割线   ***************************-->
+
+
+    <!--<div class="list-div" id="listDiv">
+        <table border="1px" width="100%" style="border:solid 1px;" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>用户id</th>
+                <th>用户名</th>
+                <th><input type="button" id="toggle" value="显示/隐藏密码" style="background-color:lightpink" /></th>
+                <th>当前剩余QB</th>
+                <th>通过点赞<br />累计获得QB</th>
+                <th>点赞次数</th>
+                <th>注册时间</th>
+                <th>登录权限</th>
+                <th>点赞权限</th>
+            </tr>
+            <?php
+
+           foreach ($user['data'] as $k => $v)
+            {
+
+                //找出当前前台在线的用户
+                if($v['username']==$_SESSION['ok']['username'])
+                {
+                    $v['username']=$v['username']."<a onclick=\"return alert('当前前台用户".$v['username']."在线!');\"
+                                                      title='在线'>
+                    <img src='/Statics/image/1088.jpg' /></a>";
+                }
+
+                echo   "<tr>
+                    <th>".$v['userid']."</th>
+                    <th><font color='blue' size='4'>".$v['username']."</font></th>
+                    <th><div class='showpassword' style='display:none;'><font color='red' >".$v['showpassword']."</font></div></th>
+                    <th>".$v['qb']."</th>
+                    <th>".$v['leijihuode_qb']."</th>
+                    <th>".$v['dianzancount']."</th>
+                    <th>".date('Y/m/d H:i:s',$v['registertime'])."</th>
+                    <th><input type='radio' name='login";echo $v['userid'];echo"' value='1' ";
+                        if($v['loginroot']==1){echo "checked='checked'";$color1='#00FF00';}
+                        echo " /><font color=$color1 >";unset($color1);echo "允许</font><br /><input type='radio' name='login";echo $v['userid'];echo"' value='0' ";
+                        if($v['loginroot']==0){echo "checked='checked'";$color2='red';}
+                        echo " /><font color=$color2 >";unset($color2);echo "禁止</font></th>
+                    <th><input type='radio' name='dianzan";echo $v['userid'];echo"' value='1' ";
+                    if($v['dianzanroot']==1){echo "checked='checked'";$color3='#00FF00';}
+                    echo " /><font color=$color3 >";unset($color3);echo "允许</font><br /><input type='radio' name='dianzan";echo $v['userid'];echo"' value='0' ";
+                    if($v['dianzanroot']==0){echo "checked='checked'";$color4='red';}
+                    echo " /><font color=$color4 >";unset($color4);echo "禁止</font></th>
+                    </tr>";
+
+            }
+
+            ?>
+
+        </table>
+    </div>
+    <tr><th><input type="submit" value="确认修改" style="background-color:#00bfff" />
+        <input type="reset"  value="初始化" style="background-color:lawngreen" /></th>
+    </tr>
+</form>-->
+
+<script type="text/javascript">
+    /**
+     获取某一页的用户信息并且覆盖上一页的
+     **/
+    function getUser(p)
+    {
+
+        $.ajax({
+            type:"post",
+            url:"ajaxGetUser/p/"+p,
+            //data:fd,
+            data:$('#search').serialize(),//传递搜索条件的关键代码
+            //dataType:"json",
+            success:function(data)
+            {
+
+                document.getElementById('goto').value="";
+                //console.log(data.info.data);
+
+                //var str = JSON.stringify(data);//json对象转换为字符串
+                var html='<form method="post" action="" name="listForm"><table border="1px" cellspacing="0px" width="100%" style="border: solid 1px;" cellpadding="0" cellspacing="0">' +
+                        '<tr style="width:30px;"><th>用户ID</th><th>用户名</th><th>用户密码'+
+                        '</th><th>当前剩余QB</th><th>通过点赞<br />累计获得QB</th><th>点赞次数</th><th>注册时间</th><th>登录权限</th><th>点赞权限</th><th>聊天权限</th></tr>';
+                //var data= preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", data);
+
+                //var p=p;
+                //console.log(p);
+
+                //遍历
+                $(data.info.data).each(function(k,v){
+
+                    v.registertime=getLocalTime(v.registertime);
+                    if(v.loginroot==1){v.loginroot='<font color="#32cd32">允许</font>';}
+                    if(v.loginroot==0){v.loginroot='<font color="red">禁止</font>';}
+                    if(v.dianzanroot==1){v.dianzanroot='<font color="#32cd32">允许</font>';}
+                    if(v.dianzanroot==0){v.dianzanroot='<font color="red">禁止</font>';}
+                    if(v.chatroot==1){v.chatroot='<font color="#32cd32">允许</font>';}
+                    if(v.chatroot==0){v.chatroot='<font color="red">禁止</font>';}
+
+                    //console.log(p);
+
+                    //核心语句   不能有</table></form>标签闭合 遍历完后才能加上闭合标签
+                    html +='<tr><th>'+v.userid+'</th><th><font color="blue" size="4">'+v.username+'</font></th><th><div class="showpassword" style="display:none;"><font color="red">'
+                            +v.showpassword+'</font></div></th><th>'+v.qb+'</th><th>'+v.leijihuode_qb+'</th><th>'+v.dianzancount+'</th><th>'+v.registertime+'</th><th>'+v.loginroot
+                            +'<input type="button" value="修改" onclick="update_loginroot('+v.userid+','+p+')" /></th><th>'+v.dianzanroot
+                            +'<input type="button" value="修改" onclick="update_dianzanroot('+v.userid+','+p+')" /></th><th>'+v.chatroot
+                            +'<input type="button" value="修改" onclick="update_chatroot('+v.userid+','+p+')" /></th></tr>';
+
+                });
+
+                html=html+'</table></form>';//最后才加上闭合标签</table></form>
+
+                $("#searchresult").replaceWith("<div id='searchresult'>"+html+"</div>");
+
+                //console.log(parseInt(p)-1);
+                //console.log(parseInt(p)+1);
+                var prev=parseInt(p)-1<=0?1:parseInt(p)-1;
+                var next=parseInt(p)+1>data.info.pageNumber?data.info.pageNumber:parseInt(p)+1;
+                document.getElementById('show').innerHTML='<br /><font size="1">当前页/总页数</font>&nbsp;<b><font color="red" size="4">'+
+                        p+'</font></b>/<b><font color="red" size="4">'+data.info.pageNumber+'</font></b>&nbsp;共<b><font color="#1e90ff" size="4">'+
+                        data.info.count+'</font></b>个用户<br /><br /><input type="button" value="<<" onclick="getUser(1)" />' +
+                        '<input type="button" value="<" onclick="getUser('+prev+')" /><input type="button" value=">" onclick="getUser('+
+                        next+')" /><input type="button" value=">>" onclick="getUser('+data.info.pageNumber+')" />';
+
+            },
+            beforeSend: function(){
+
+                $('#searchresult').html('<image src="/Statics/admin_image/2787117_161300358107_1.gif" />');//请求未完成时显示加载中图片
+
+            }
+        });
+    }
+
+    //ajax修改登录权限
+    function update_loginroot(k,p){
+        //alert(k);alert(p);
+        $.get('updateLoginRoot',{userid:k},function(msg){
+            alert(msg);
+            getUser(p);
+        });
+
+    }
+
+    //ajax修改点赞权限
+    function update_dianzanroot(k,p){
+        //alert(k);alert(p);
+        $.get('updateDianzanRoot',{userid:k},function(msg){
+            alert(msg);
+            getUser(p);
+        });
+
+    }
+
+    //ajax修改聊天权限
+    function update_chatroot(k,p){
+        //alert(k);alert(p);
+        $.get('updateChatRoot',{userid:k},function(msg){
+            alert(msg);
+            getUser(p);
+        });
+
+    }
+
+
+
+    /**
+     跳转至xx页
+     **/
+    function go()
+    {
+        var page=document.getElementById("goto").value;
+        //alert(page);
+
+        getUser(page);//调用函数
+
+
+    }
+
+
+    //跳转输入框样式美化
+    function borderColor(){
+        if(self['goto'].style.borderColor=='lawngreen'){
+            self['goto'].style.borderColor = 'white';
+        }else{
+            self['goto'].style.borderColor = 'lawngreen';
+        }
+        oTime = setTimeout('borderColor()',300);
+    }
+
+    window.onload = function()
+    {
+        getUser(1);
+        //search_1();
+    }
+
+
+    //JS时间戳转换函数
+    function getLocalTime(nS){
+        return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页</title>
+	<script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+	<script type="text/javascript" src="/Statics/js/milo.min.js"></script><!--腾讯js-->
+	<link href="/Statics/css/index.min.css" rel="stylesheet" type="text/css" /><!-- css -->
+	<script type="text/javascript" src="/Statics/js/index.min.js"></script><!-- JS -->
+</head>
+<body style="background-image:url(/Statics/image/beijing.jpg);background-size:cover;">
+
+<div id="head">
+	<image src="<?php echo $head; ?>" title="我的头像" /><br />
+	<b><font color='blue' size='4'><?php echo $_SESSION['ok']['username']; ?></font></b><br />
+	<a href="<?php echo U('head'); ?>" title="设置头像"><b><font size="1" color="#6a5acd">设置头像</font></b></a><br /><br />
+	<a href="<?php echo U('chat'); ?>" title="进入聊天室"><b><font size="3" color="#6a5acd">进入聊天室>>></font></b></a>
+</div>
+
+<div id="logout">
+	<input type="button" value="首页公告" style="background:yellow" onclick="alert('<?php echo $shouyegonggao; ?>')" title="首页公告" />&nbsp;
+	<a href="<?php echo U('update'); ?>" title="修改密码"><b><font size="1" color="#663399">修改密码</font></b></a>
+	<a onclick="return confirm('确定要注销用户吗?');" href="<?php echo U('logout'); ?>" title="注销用户"><b><font size="1" color="#696969">注销用户</font></b></a>
+</div>
+
+<!--<div><a href="<?php echo U('login'); ?>" >  返回登录界面(不注销)  </a></div><br />-->
+<!--<div><a href="<?php echo U('register'); ?>" >  前往注册界面(不注销)  </a></div><br /><br /><br /><br /><br />-->
+
+
+<!--实现点赞功能的表单-->
+<!--<form method="post" action="__SELF__">-->
+<!--<form>
+	<input type="image" src="/Statics/image/wyqd.png" onclick="dianzan()" />
+</form>-->
+<!--<br />
+<font color="red" size="5"><span id="dianzanresult"></span></font>&lt;!&ndash; 点赞提示消息  ajax实现  &ndash;&gt;-->
+
+<!--<input type="button" value="点我点赞" id="sendButton" onclick="timer(60)" />-->
+
+<div id="dz">
+	<div id="dianzan">
+		<input id="dzdz" type="image" src="/Statics/image/dianzan.jpg" onclick="dianzan()" title="点赞一下" />
+	</div>
+	<div>
+		<input type="button" value="查看点赞记录" style="background:hotpink" onclick="TGDialogS('dianzanjilu_box')" title="查看点赞记录" /><br />
+		<font size="1">累计获得</font><font color="#ff1493" size="3"><b><span id="dz0"><?php echo $leijihuode_qb; ?></span></b></font><font size="1">QB</font>
+	</div>
+	<font size="1">你已经点赞了</font><font color="#ff4500" size="3"><b><span id="dz1"><?php echo $dianzancishu; ?></span></b></font><font size="1">次</font><br />
+	<font size="1">网站总共被点赞了</font><font color="#1e90ff" size="3"><b><span id="dz2"><?php echo $totledianzancishu; ?></span></b></font><font size="1">次</font>
+	<input type="image" src="/Statics/image/shujushuaxin_1.jpg" onclick="ajax_get_leijihuodeqb_dianzancishu_totledianzancishu()" title="数据异常？点我刷新" />
+</div>
+
+<div id="myqb_mycfdian">
+	<input type="button" value="查看游戏仓库" style="background:springgreen" onclick="TGDialogS('youxicangku_box')" title="查看游戏仓库" />&nbsp;
+	<font size="1">我的QB</font><font color="#ff4500" size="3"><b><span id="myqb"><?php echo $myqb; ?></span></b></font>
+	<font size="1">我的CF点</font><font color="#1e90ff" size="3"><b><span id="mycfdian"><?php echo $mycfdian; ?></span></b></font>
+	<input type="image" src="/Statics/image/shujushuaxin_1.jpg" onclick="ajax_get_myqb_mycfdian()" title="数据异常？点我刷新" />
+</div>
+
+<!--点赞记录弹出层-->
+<div id="dianzanjilu_box" style="display:none;background-color:lightpink;">
+	<div id="dianzanjilu"></div>
+	<div id="dianzanjilu_page"></div>
+	<br />
+	<a href="javascript:showDialog.hide()" title="关闭">×</a>
+</div>
+
+<!--游戏仓库弹出层-->
+<div id="youxicangku_box" style="display:none;width:505px;height:505px;overflow:auto;background-image:url('/Statics/image/');">
+	<div style="position:fixed;top:50px;">
+		<a href="javascript:showDialog.hide()" title="关闭">×</a>
+		<b>
+			武器[<?php echo $count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			V[<?php echo $v_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			K[<?php echo $k_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			角色[<?php echo $juese_count; ?>]
+		</b>
+	</div>
+	<div id="youxicangku"></div>
+</div>
+
+<!--<a href="<?php echo U('Huodong/zhanbu');?>">占卜活动</a><br />
+<a href="<?php echo U('Huodong/guaguale');?>">刮刮乐活动</a><br />
+<a href="<?php echo U('Huodong/shengcaibaoxiang');?>">生财宝箱活动</a><br />
+<a href="<?php echo U('Shop/shopindex');?>">游戏商城首页</a><br />-->
+<!--我的QB <?php echo $qb;?>-->
+
+<!--轮换显示的活动链接图片-->
+<br /><br /><br /><br /><br /><br />
+<div class="scroll_top"></div>
+<div class="scroll_mid">
+	<a id="href" href="<?php echo U('Huodong/zhanbu');?>"><image src="/Statics/image/1.png" title="斯沃特的占卜牌" id="dd_scroll" /></a>
+	<div id="scroll_number">
+		<ul>
+			<li id="scroll_number_1" title="斯沃特的占卜牌" onmouseover="scrollStop(1)" onmouseout="scrollStart()" style="background-color:mediumspringgreen;">斯沃特的占卜牌</li>
+			<li id="scroll_number_2" title="刮刮乐" onmouseover="scrollStop(2)" onmouseout="scrollStart()">刮刮乐</li>
+			<li id="scroll_number_3" title="生财宝箱" onmouseover="scrollStop(3)" onmouseout="scrollStart()">生财宝箱</li>
+			<li id="scroll_number_4" title="游戏商城" onmouseover="scrollStop(4)" onmouseout="scrollStart()">游戏商城</li>
+		</ul>
+	</div>
+</div>
+<div class="scroll_end"></div>
+
+<!--<embed id="myEmbed" src="/Statics/ao.mp3" hidden="true" />
+播放按钮这么写<input type="button" onclick="myEmbed.play()"/>-->
+
+<!--焦点图的JS代码-->
+<script type="text/javascript">
+	/*************************************焦点图*****************************************/
+	/*
+	 分析结果：
+	 （1）先让图片轮换起来
+	 （2）事件：鼠标放到图片上停止轮换、鼠标移开继续
+	 （3）序号也要跟着变背景：当前背景色为mediumspringgreen，其它背景色为空
+	 （4）事件：鼠标放到序号上停止轮换，图片也切换到对应那张图，移出继续轮换
+	 */
+
+	//（一）先让图片轮换起来
+	//获取id=dd_scroll图片对象
+	var imgObj = document.getElementById("dd_scroll");
+	var num = 1;//当前图片、全局变量
+	var timer2 = window.setInterval("imgSwap()",2000);
+	function imgSwap()
+	{
+		//修改imgObj的src属性的值
+		imgObj.src = "/Statics/image/"+num+".png";
+		if(num==1){$("#href").attr("href","<?php echo U('Huodong/zhanbu');?>");$("#dd_scroll").attr("title","斯沃特的占卜牌");}
+		else if(num==2){$("#href").attr("href","<?php echo U('Huodong/guaguale');?>");$("#dd_scroll").attr("title","刮刮乐");}
+		else if(num==3){$("#href").attr("href","<?php echo U('Huodong/shengcaibaoxiang');?>");$("#dd_scroll").attr("title","生财宝箱");}
+		else if(num==4){$("#href").attr("href","<?php echo U('Shop/shopindex');?>");$("#dd_scroll").attr("title","游戏商城");}
+		//更改序号背景色
+		changeBgColor();
+		//如果num=5，则num=1
+		num++;
+		if(num==5){num=1;}
+	}
+	//给图片增加onMouseOver事件、onMouseOut事件
+	imgObj.onmouseover = function(){
+		window.clearInterval(timer2);
+	}
+	imgObj.onmouseout = function(){
+		timer2 = window.setInterval("imgSwap()",2000);
+	}
+
+	//（二）让序号的背景色，跟着当前图片走。
+	function changeBgColor()
+	{
+		//获取id=scroll_number的div对象
+		var divObj = document.getElementById("scroll_number");
+		//获取所有的<li>标签构成的对象数组
+		var arr_lis = divObj.getElementsByTagName("li");
+		//循环将所有的<li>标签的背景色清空
+		for(var i=0;i<arr_lis.length;i++)
+		{
+			arr_lis[i].style.backgroundColor = "";
+		}
+		//将当前图片序号，更改背景色为mediumspringgreen
+		arr_lis[num-1].style.backgroundColor = "mediumspringgreen";
+	}
+	//（三）鼠标放到序号上时，动画停止，图片要切换到相对应的图片上，
+	//鼠标移开，动画继续
+	function scrollStop(index)
+	{
+		//清除定时器
+		window.clearInterval(timer2);
+		//将当前图片序号换成index
+		num = index;
+		//重新更改图片的src属性的值
+		imgObj.src = "/Statics/image/"+num+".png";
+		if(num==1){$("#href").attr("href","<?php echo U('Huodong/zhanbu');?>");$("#dd_scroll").attr("title","斯沃特的占卜牌");}
+		else if(num==2){$("#href").attr("href","<?php echo U('Huodong/guaguale');?>");$("#dd_scroll").attr("title","刮刮乐");}
+		else if(num==3){$("#href").attr("href","<?php echo U('Huodong/shengcaibaoxiang');?>");$("#dd_scroll").attr("title","生财宝箱");}
+		else if(num==4){$("#href").attr("href","<?php echo U('Shop/shopindex');?>");$("#dd_scroll").attr("title","游戏商城");}
+		//更改当前li序号的背景色
+		changeBgColor();
+	}
+	//鼠标移开，动画继续
+	function scrollStart()
+	{
+		timer2 = window.setInterval("imgSwap()",2000);
+	}
+</script>
+
+</body>
+</html>

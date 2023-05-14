@@ -1,0 +1,111 @@
+﻿/*
+
+css
+
+作者百度ID:你是shou啊
+
+*/
+
+/*点赞区域在网页左下角显示*/
+#dz
+{
+    position:fixed;
+    bottom:5px;
+    left:5px;
+}
+
+#logout
+{
+    position:fixed;
+    bottom:5px;
+    right:5px;
+}
+
+#head
+{
+    position:fixed;
+    top:5px;
+    left:5px;
+}
+
+#myqb_mycfdian
+{
+    position:fixed;
+    top:5px;
+    right:5px;
+}
+
+#dianzan
+{
+    float:left;
+}
+
+.scroll_top{
+    /*background-image:url(/Statics/image/dd_scroll_top.gif);*/
+    width:540px;
+    height:51px;
+    background-repeat:no-repeat;
+}
+.scroll_mid{
+    background-color:aliceblue;
+    border-left:solid 1px #d6d5d6;
+    border-right:solid 1px #d6d5d6;
+    width:612px;
+    padding:1px 1px 1px 1px;
+    margin:0 auto;
+}
+#dd_scroll{ /*FF*/
+    float:none;
+}
+*html #dd_scroll{
+    float:left; /*IE6*/
+}
+*+html #dd_scroll{
+    float:left; /*IE7*/
+}
+#scroll_number{
+    float:right;
+    padding-right:10px;
+}
+#scroll_number li{
+    width:90px;
+    height:17px;
+    text-align:center;
+    border:solid 1px #999;
+    margin-top:5px;
+    font-size:12px;
+    line-height:16px;
+    cursor:pointer;
+}
+.scroll_number_out{
+}
+.scroll_number_over{
+    background-color:#F96;
+    color:#FFF;
+}
+.scroll_end{
+    /*background-image:url(/Statics/image/dd_scroll_end.gif);*/
+    width:540px;
+    height:8px;
+    background-repeat:no-repeat;
+    margin-bottom:10px;
+}
+
+ul,li,ol,h1,dl,dd{
+    list-style:none;
+    margin:0px;
+    padding:0px;
+}
+a{
+    color:#333333;
+    text-decoration: none;
+}
+a:hover{
+    color:#333333;
+    text-decoration:underline;
+}
+img{
+    border:0px;
+}
+
+

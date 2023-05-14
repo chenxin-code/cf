@@ -1,0 +1,169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+    <!--   作者百度ID:你是shou啊   -->
+
+    <head>
+        <title>生财宝箱</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+
+        <script type="text/javascript" src="/Statics/js/shengcaibaoxiang.min.js"></script><!-- JS -->
+
+        <script type="text/javascript" src="/Statics/js/milo.min.js"></script><!--腾讯js-->
+
+        <link href="/Statics/css/shengcaibaoxiang.min.css" rel="stylesheet" type="text/css" /><!-- css -->
+        
+    </head>
+
+
+    <body bgColor="#99cc66">
+
+
+        <div class="yes"><image src="/Statics/image/shengcaibaoxiang_image/biaoti.png" /></div>
+        <!-- 购买钥匙区域 -->
+        <div id="goumai">
+        <span id="qb10"><input id="qb_10" type="image" src="/Statics/image/shengcaibaoxiang_image/10qb.png" onclick="disp_confirm_10()" title="消费10QB购买1把钥匙" /></span>
+        <span id="qb100"><input id="qb_100" type="image" src="/Statics/image/shengcaibaoxiang_image/100qb.png" onclick="disp_confirm_100()" title="消费100QB购买11把钥匙" /></span>
+        </div>
+        <br /><br /><br /><br />
+
+        <!-- 开箱区域 -->
+        <div id="yes0">
+            <div id="yes1">
+                <image title="开宝箱可获得CF点" src="/Statics/image/shengcaibaoxiang_image/kehuodecfdian.png" />
+            </div>
+            <div id="yes2">
+                <div id="yes3">
+                    <div id="zhongjianggonggao"><b>中奖公告</b></div>
+                    <div id="andyscroll">
+                        <div id="scrollmessage">
+                            <ul id="ul"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="yes4">
+                    <input id="kqscbx" type="image" src="/Statics/image/shengcaibaoxiang_image/kaiqishengcaibaoxiang.png" onclick="kaiqishengcaibaoxiang()" title="开宝箱消耗1把钥匙" />
+                </div>
+            </div>
+        </div>
+
+        <!--统计区域-->
+        <div id="tongji1">
+        <div id="tongji">
+            剩余钥匙&nbsp;<font color="red" size="5"><span id="result5"><?php echo $yaoshi; ?></span></font>&nbsp;把<br /><br />
+            中奖次数/开箱次数&nbsp;&nbsp;<font color="red" size="5"><span id="result2"><?php echo $zhongjiang_count; ?></span></font><font size="5">/</font><font color="red" size="5"><span id="result1"><?php echo $kaixiang_count; ?></span></font><br /><br />
+            消费&nbsp;<font color="red" size="5"><span id="result3"><?php echo $spend; ?></span></font>&nbsp;QB<br /><br />
+            累计获得&nbsp;<font color="red" size="5"><span id="result4"><?php echo $leijihuode_cfdian; ?></span></font>&nbsp;CF点&nbsp;&nbsp;<font color="#663399" size="4"><b><span id="tishi"></span></b></font><br /><br /><br />
+        </div>
+        <input type="image" src="/Statics/image/shengcaibaoxiang_image/shujushuaxin.jpg" onclick="ajax_get_tongji_data()" title="数据异常？点我刷新" />
+        </div>
+        <br /><br /><br /><br />
+
+
+        <div id="head">
+            <image src="<?php echo $head; ?>" title="我的头像" /><br />
+            <b><font color='blue' size='4'><?php echo $_SESSION['ok']['username']; ?></font></b>
+        </div>
+
+        <div id="myqb_mycfdian">
+            <input type="button" value="查看游戏仓库" style="background:springgreen" onclick="TGDialogS('youxicangku_box')" title="查看游戏仓库" />&nbsp;
+            <font size="1">我的QB</font><font color="#ff4500" size="3"><b><span id="myqb"><?php echo $myqb; ?></span></b></font>
+            <font size="1">我的CF点</font><font color="#1e90ff" size="3"><b><span id="mycfdian"><?php echo $mycfdian; ?></span></b></font>
+            <input type="image" src="/Statics/image/shengcaibaoxiang_image/shujushuaxin_1.jpg" onclick="ajax_get_myqb_mycfdian()" title="数据异常？点我刷新" />
+        </div>
+
+
+        <div id="chakanjilu">
+            <input type="button" value="查看购买记录" style="background:lightseagreen" onclick="TGDialogS('goumaijilu_box')" title="查看购买记录" /><br />
+            <input type="button" value="查看开箱记录" style="background:orange" onclick="TGDialogS('kaixiangjilu_box')" title="查看开箱记录" />
+        </div>
+
+        <div id="huodongshuoming">
+            <input type="button" value="活动说明" style="background:yellow" onclick="alert('<?php echo $huodongshuoming; ?>')" title="活动说明" />&nbsp;
+            <a href="<?php echo U('Login/index'); ?>" title="返回首页"><b><font size="2" color="#663399">返回首页</font></b></a>
+        </div>
+
+        <!--购买记录弹出层-->
+        <div id="goumaijilu_box" style="display:none;background-color:#C2C287;">
+            <div id="goumaijilu"></div>
+            <div id="goumaijilu_page"></div>
+            <br />
+            <a href="javascript:showDialog.hide()" title="关闭">×</a>
+        </div>
+
+        <!--开箱记录弹出层-->
+        <div id="kaixiangjilu_box" style="display:none;background-color:#C2C287;">
+            <div id="kaixiangjilu"></div>
+            <div id="kaixiangjilu_page"></div>
+            <br />
+            <a href="javascript:showDialog.hide()" title="关闭">×</a>
+        </div>
+
+        <!--游戏仓库弹出层-->
+        <div id="youxicangku_box" style="display:none;width:505px;height:505px;overflow:auto;background-image:url('/Statics/image/');">
+            <div style="position:fixed;top:50px;">
+                <a href="javascript:showDialog.hide()" title="关闭">×</a>
+                <b>
+                    武器[<?php echo $count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    V[<?php echo $v_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    K[<?php echo $k_count; ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    角色[<?php echo $juese_count; ?>]
+                </b>
+            </div>
+            <div id="youxicangku"></div>
+        </div>
+
+        <!--滚动字幕区域-->
+        <!--<div id="zhongjianggonggao"><b>中奖公告</b></div>
+        <div id="andyscroll">
+            <div id="scrollmessage">
+                <ul id="ul"></ul>
+            </div>
+        </div>-->
+
+        <!--滚动字幕js脚本-->
+        <script type="text/javascript">
+            var stopscroll = false;
+            var scrollElem = document.getElementById("andyscroll");
+            var marqueesHeight = scrollElem.style.height;
+            scrollElem.onmouseover = new Function('stopscroll = true');
+            scrollElem.onmouseout  = new Function('stopscroll = false');
+            var preTop = 0;
+            var currentTop = 0;
+            var stoptime = 0;
+            var leftElem = document.getElementById("scrollmessage");
+            scrollElem.appendChild(leftElem.cloneNode(true));
+            init_srolltext();
+            function init_srolltext(){
+                scrollElem.scrollTop = 0;
+                setInterval('scrollUp()', 50);//确定滚动速度的, 数值越小, 速度越快
+            }
+            function scrollUp(){
+                if(stopscroll) return;
+                currentTop += 2; //设为1, 可以实现间歇式的滚动; 设为2, 则是连续滚动
+                if(currentTop == 19) {
+                    stoptime += 1;
+                    currentTop -= 1;
+                    if(stoptime == 180) {
+                        currentTop = 0;
+                        stoptime = 0;
+                    }
+                }else{
+                    preTop = scrollElem.scrollTop;
+                    scrollElem.scrollTop += 1;
+                    if(preTop == scrollElem.scrollTop){
+                        scrollElem.scrollTop = 0;
+                        scrollElem.scrollTop += 1;
+                    }
+                }
+            }
+        </script>
+
+    </body>
+
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>刮刮乐信息</title>
+    <script type="text/javascript" src="/Statics/js/jquery-1.11.3.min.js"></script><!--Jquery-->
+    <script type="text/javascript">
+
+
+
+
+        /**
+         获取某一页的刮刮乐信息并且覆盖上一页的
+         **/
+        function getGuaguale(p)
+        {
+
+            $.ajax({
+                type:"post",
+                url:"ajaxGetGuaguale/p/"+p,
+                //data:fd,
+                data:$('#search').serialize(),//传递搜索条件的关键代码
+                //dataType:"json",
+                success:function(data)
+                {
+
+                    document.getElementById('goto').value="";
+                    //console.log(data.info.data);
+
+                    //var str = JSON.stringify(data);//json对象转换为字符串
+                    var html='<form method="post" action="" name="listForm"><table border="1px" cellspacing="0px" width="100%" style="border: solid 1px;" cellpadding="0" cellspacing="0">'+
+                            '<tr style="width:30px;"><th>用户ID</th><th>用户名</th><th>剩余积分</th><th>剩余刮刮卡</th><th>刮卡次数</th><th>活动花费QB</th></tr>';
+                    //var data= preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", data);
+
+                    //var p=p;
+                    //console.log(p);
+
+                    //遍历
+                    $(data.info.data).each(function(k,v){
+
+                        //console.log(p);
+
+                        //核心语句   不能有</table></form>标签闭合 遍历完后才能加上闭合标签
+                        html +='<tr><th>'+v.userid+'</th><th><font color="blue" size="4">'+v.username+'</font></th><th>'+v.jifen+'</th><th>'
+                                +v.guaguaka+'</th><th>'+v.guaka_count+'</th><th>'+v.pay+'</th></tr>';
+
+                    });
+
+                    html=html+'</table></form>';//最后才加上闭合标签</table></form>
+
+                    $("#searchresult").replaceWith("<div id='searchresult'>"+html+"</div>");
+
+                    //console.log(parseInt(p)-1);
+                    //console.log(parseInt(p)+1);
+                    var prev=parseInt(p)-1<=0?1:parseInt(p)-1;
+                    var next=parseInt(p)+1>data.info.pageNumber?data.info.pageNumber:parseInt(p)+1;
+                    document.getElementById('show').innerHTML='<br /><font size="1">当前页/总页数</font>&nbsp;<b><font color="red" size="4">'+
+                            p+'</font></b>/<b><font color="red" size="4">'+data.info.pageNumber+'</font></b>&nbsp;共<b><font color="#1e90ff" size="4">'+
+                            data.info.count+'</font></b>个用户<br /><br /><input type="button" value="<<" onclick="getGuaguale(1)" />' +
+                            '<input type="button" value="<" onclick="getGuaguale('+prev+')" /><input type="button" value=">" onclick="getGuaguale('+
+                            next+')" /><input type="button" value=">>" onclick="getGuaguale('+data.info.pageNumber+')" />';
+
+                },
+                beforeSend: function(){
+
+                    $('#searchresult').html('<image src="/Statics/admin_image/2787117_161300358107_1.gif" />');//请求未完成时显示加载中图片
+
+                }
+            });
+        }
+
+
+        /**
+         跳转至xx页
+         **/
+        function go()
+        {
+            var page=document.getElementById("goto").value;
+            //alert(page);
+            getGuaguale(page);//调用函数
+        }
+
+
+        //跳转输入框样式美化
+        function borderColor(){
+            if(self['goto'].style.borderColor=='lawngreen'){
+                self['goto'].style.borderColor = 'white';
+            }else{
+                self['goto'].style.borderColor = 'lawngreen';
+            }
+            oTime = setTimeout('borderColor()',300);
+        }
+
+        window.onload = function()
+        {
+            getGuaguale(1);
+        }
+
+    </script>
+</head>
+<body bgColor="#cccccc">
+
+<h3><font color='orange' size='5'>刮刮乐信息</font></h3>
+
+<form id="search">
+    用户名
+    <input type="text" name="username" size="12" value="" />
+    用户ID
+    <input type="text" name="userid" size="12" value="" />
+
+    <br /><img src="/Statics/admin_image/icon_search.gif" width="26" height="22" border="0" alt="search" />
+    <input type="button" value="搜索用户" onclick="getGuaguale(1)" style="background-color:lightskyblue" />
+    <input type="reset"  value="重置" style="background-color:lightgreen" />
+</form>
+
+<div id='searchresult'><image src="/Statics/admin_image/2787117_161300358107_1.gif" /></div>
+
+<div id='show'></div>
+
+<br />
+<form id="form">
+    <input name="data" id="goto" type="text" placeholder="跳转至..." size="7" style="border:2px solid lawngreen;" onfocus="borderColor(this);" onblur="clearTimeout(oTime);" />
+    <input type="button" value="go" onclick="go()" />
+</form>
+
+</body>
+</html>
